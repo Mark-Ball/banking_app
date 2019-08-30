@@ -35,11 +35,15 @@ def banking
     elsif choice == "withdraw"
         puts("How much would you like to withdraw?")
         withdraw_value = gets.strip.to_i
-        if withdraw_value <= @balance
-            @balance -= withdraw_value
-            set_balance(@balance)
+        if withdraw_value > 0
+            if withdraw_value <= @balance
+                @balance -= withdraw_value
+                set_balance(@balance)
+            else
+                puts("Insufficient funds")
+            end
         else
-            puts("Insufficient funds")
+            puts("Invalid withdraw value")
         end
         puts("Your balance is #{@balance}. Press Enter to continue.")
         continue = gets
