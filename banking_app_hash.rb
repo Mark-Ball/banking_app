@@ -47,6 +47,27 @@ def get_balance(input)
     end
 end
 
+def set_balance(user_name, balance)
+    read = []
+    File.open("banking_app_balance.rb").each do |line|
+        read.push(line)
+    end
+    puts("Read: #{read}")
+    puts("Read.length: #{read.length}")
+    for i in 0...read.length
+        if read[i].split[0] == user_name
+            read[i] = "#{user_name} #{balance}"
+        end
+    end
+    puts(read)
+    #write read back into the balance file
+    # File.open("banking_app_balance.rb", "w") do |line|
+    #     line.puts("\r#{user} #{balance}")
+    # end
+end
+set_balance("hamish", 10)
+
+=begin
 def clear_screen
     system("clear")
 end
@@ -57,11 +78,10 @@ def choice_balance(user_name)
     clear_screen
 end
 
-def choice_deposit
+def choice_deposit(user_name)
     puts("How much would you like to deposit?")
-    deposit_value = gets.strip.to_i
-    balance = get_balance 
-    p(get_balance)
+    deposit_value = gets.chomp.to_i
+    balance = get_balance(user_name)
     balance += deposit_value
     set_balance(balance)
     puts("Your balance is #{balance}. Press Enter to continue")
@@ -90,15 +110,16 @@ end
 @users = Hash.new
 #end initializing variables
 
+=begin
 puts("Enter Username")
 
 user_name = gets.strip.downcase
 
 check_user(user_name)
 
-read_users_and_balances
-
 loop do
+    read_users_and_balances
+
     puts("What would you like to do? (options: balance, deposit, withdraw, history, exit)")
     choice = gets.strip
     @history.push(choice)
@@ -159,3 +180,4 @@ end
 
 # write_user_to_hash(@username)
 # read_from_hash
+=end
