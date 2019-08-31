@@ -39,11 +39,10 @@ def check_user(user_input) #checks if user already exists, creates a new user if
 end
 
 def get_balance(input)
+    read_users_and_balances
     for user_hash in read_users_and_balances
         if user_hash[:user] == input
             return user_hash[:balance]
-        else
-            puts("That user was not found")
         end
     end
 end
@@ -52,8 +51,8 @@ def clear_screen
     system("clear")
 end
 
-def choice_balance
-    puts("Your balance is #{get_balance}. Press enter to continue.")
+def choice_balance(user_name)
+    puts("Your balance is #{get_balance(user_name)}. Press enter to continue.")
     continue = gets
     clear_screen
 end
@@ -91,19 +90,21 @@ end
 @users = Hash.new
 #end initializing variables
 
-puts("Welcome to the banking app")
 puts("Enter Username")
+
 user_name = gets.strip.downcase
+
 check_user(user_name)
 
 read_users_and_balances
+
 loop do
     puts("What would you like to do? (options: balance, deposit, withdraw, history, exit)")
     choice = gets.strip
     @history.push(choice)
 
     if choice == "balance"
-        choice_balance
+        choice_balance(user_name)
     elsif choice == "deposit"
         choice_deposit
     elsif choice == "withdraw"
