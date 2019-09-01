@@ -38,10 +38,10 @@ def check_user(user_input) #checks if user already exists, creates a new user if
     end
 end
 
-def get_balance(input)
+def get_balance(user_name)
     read_users_and_balances
     for user_hash in read_users_and_balances
-        if user_hash[:user] == input
+        if user_hash[:user] == user_name
             return user_hash[:balance]
         end
     end
@@ -52,22 +52,18 @@ def set_balance(user_name, balance)
     File.open("banking_app_balance.rb").each do |line|
         read.push(line)
     end
-    puts("Read: #{read}")
-    puts("Read.length: #{read.length}")
+    
     for i in 0...read.length
         if read[i].split[0] == user_name
             read[i] = "#{user_name} #{balance}"
         end
     end
-    puts(read)
-    #write read back into the balance file
-    # File.open("banking_app_balance.rb", "w") do |line|
-    #     line.puts("\r#{user} #{balance}")
-    # end
+    
+    File.open("banking_app_balance.rb", "w") do |line|
+        line.puts(read)
+    end
 end
-set_balance("hamish", 10)
 
-=begin
 def clear_screen
     system("clear")
 end
@@ -83,13 +79,13 @@ def choice_deposit(user_name)
     deposit_value = gets.chomp.to_i
     balance = get_balance(user_name)
     balance += deposit_value
-    set_balance(balance)
+    set_balance(user_name, balance)
     puts("Your balance is #{balance}. Press Enter to continue")
     continue = gets
     clear_screen
 end
 
-def choice_withdraw
+def choice_withdraw(user_name)
     balance = get_balance
     puts("How much would you like to withdraw?")
     withdraw_value = gets.strip.to_i
@@ -110,7 +106,7 @@ end
 @users = Hash.new
 #end initializing variables
 
-=begin
+
 puts("Enter Username")
 
 user_name = gets.strip.downcase
@@ -127,7 +123,7 @@ loop do
     if choice == "balance"
         choice_balance(user_name)
     elsif choice == "deposit"
-        choice_deposit
+        choice_deposit(user_name)
     elsif choice == "withdraw"
         choice_withdraw
         # puts("How much would you like to withdraw?")
@@ -180,4 +176,3 @@ end
 
 # write_user_to_hash(@username)
 # read_from_hash
-=end
