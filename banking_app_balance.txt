@@ -1,0 +1,3 @@
+hamish 50
+mark 25
+garret 200
