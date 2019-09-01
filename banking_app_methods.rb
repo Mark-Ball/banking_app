@@ -73,8 +73,16 @@ def choice_balance(user_name)
 end
 
 def choice_deposit(user_name)
-    puts("How much would you like to deposit?")
-    deposit_value = gets.chomp.to_i
+    deposit_value = nil
+    loop do
+        puts("How much would you like to deposit?")
+        deposit_value = gets.chomp.to_i
+        if deposit_value < 0
+            puts("Invalid: deposits must be positive")
+        else
+            break
+        end
+    end
     balance = get_balance(user_name)
     balance += deposit_value
     set_balance(user_name, balance)
