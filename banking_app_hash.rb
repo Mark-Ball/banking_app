@@ -89,11 +89,15 @@ def choice_withdraw(user_name)
     balance = get_balance(user_name)
     puts("How much would you like to withdraw?")
     withdraw_value = gets.chomp.to_i
-    if withdraw_value <= balance
-        balance -= withdraw_value
-        set_balance(user_name, balance)
+    if withdraw_value > 0
+        if withdraw_value <= balance
+            balance -= withdraw_value
+            set_balance(user_name, balance)
+        else
+            puts("Insufficient funds")
+        end
     else
-        puts("Insufficient funds")
+        puts("Invalid withdraw amount")
     end
     puts("Your balance is #{balance}. Press Enter to continue.")
     continue = gets
@@ -112,18 +116,10 @@ def read_history(history_array)
     clear_screen
 end
 
-#initializing variables
-@balance = 0
-@history = Array.new
-@users = Hash.new
 history = []
-#end initializing variables
-
 
 puts("Enter Username")
-
 user_name = gets.chomp.downcase
-
 check_user(user_name)
 
 loop do
